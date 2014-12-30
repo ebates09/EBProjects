@@ -1,0 +1,933 @@
+package OOPErikBates2;
+
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.JTextField;
+public class CompleteSodaMachine {
+
+	public static JFrame frame = new JFrame("SodaMachine");
+	public static JFrame adminframe = new JFrame();
+	public static String input;
+	
+	public static JButton five;
+	public static JButton ten;
+	public static JButton twentyfive;
+	public static JButton coinreturn;
+	public static JButton coke;
+	public static JButton orange;
+	public static JButton sprite;
+	public static JButton grape;
+	public static JButton remove;
+	public static JButton removecoke;
+	public static JButton removeorange;
+	public static JButton removesprite;
+	public static JButton removegrape;
+	
+	public static JTextField totalbox;
+	public static JTextField coke1;
+	public static JTextField orange1;
+	public static JTextField sprite1;
+	public static JTextField grape1;
+	public static JTextField selection1;
+	public static JTextField change1;
+	public static JTextField n1;
+	public static JTextField d1;
+	public static JTextField q1;
+	public static JTextField total1;
+	public static JTextField qcoke;
+	public static JTextField qorange;
+	public static JTextField qsprite;
+	public static JTextField qgrape;
+	
+	public static Timer timer0;
+	public static Timer timer1;
+	public static Timer timer2;
+
+	
+	
+	public static InitialState sm = new InitialState();
+
+	public static void main(String[] args){
+
+		soda();
+		admin();
+		
+		
+	}
+		// TODO Auto-generated method stub
+	
+		
+
+		public CompleteSodaMachine()
+		{
+		}
+
+		public static void soda() {
+			//JPanel will hold Soda Machine Title and Coin Entry 
+			JPanel panelone = new JPanel();
+			panelone.setLayout(new GridBagLayout());
+			GridBagConstraints c = new GridBagConstraints();
+			
+			
+			JLabel sodamachine = new JLabel("Soda Machine");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=1;
+			c.gridy=0;
+			c.insets= new Insets(0,0,0,0);
+			panelone.add(sodamachine,c);
+			
+			JLabel coinentry = new JLabel("Coin Entry");
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=1;
+			c.ipady=20;
+			c.insets=new Insets(0,0,0,0);
+			panelone.add(coinentry,c);
+			
+			
+		    five = new JButton("5");
+			c.gridwidth=1;
+			c.fill= GridBagConstraints.NONE;
+			c.gridx=0;
+			c.gridy=2;
+			c.ipady=0;
+			c.insets=new Insets(0,0,0,0);
+			panelone.add(five,c);
+			
+			timer0 = new Timer(30000,new ActionListener()
+			{
+				public void actionPerformed(ActionEvent event){
+					String chg = Integer.toString(ChangeMechanism.changeBox);
+					change1.setText(chg);
+					ChangeMechanism.changeBox=0;
+					totalbox.setText("0");
+					timer2.start();
+					
+					
+				
+						
+				}
+			});
+			
+			timer1 = new Timer(2000,new ActionListener()
+			{
+				public void actionPerformed(ActionEvent event){
+					selection1.setText("");
+					change1.setText("");
+					coke1.setText("");
+					orange1.setText("");
+					grape1.setText("");
+					sprite1.setText("");
+
+					totalbox.setText("0");
+						
+				}
+			});
+			
+			timer2 = new Timer(1900,new ActionListener()
+			{
+				public void actionPerformed(ActionEvent event){
+					change1.setText("");
+					
+				
+						
+				}
+			});
+			
+			five.addActionListener(new
+					ActionListener()
+			{
+				public void actionPerformed(ActionEvent e){
+					CompleteSodaMachine.sm.entry("5");
+					if(!timer0.isRunning())
+					{
+						timer0.start();
+					}
+				}
+			});
+		
+			
+		    ten = new JButton ("10");
+			c.gridwidth=1;
+			c.gridx=1;
+			c.gridy=2;
+			c.ipadx=0;
+			c.ipady=0;
+			c.insets=new Insets(0,0,0,0);
+			panelone.add(ten,c);
+			
+			ten.addActionListener(new
+					ActionListener()
+			{
+				public void actionPerformed(ActionEvent e){
+					CompleteSodaMachine.sm.entry("10");
+					if(!timer0.isRunning())
+					{
+						timer0.start();
+					}
+				}
+			});
+		
+			
+		    twentyfive = new JButton("25");
+			c.anchor=GridBagConstraints.CENTER;
+			c.gridwidth= GridBagConstraints.RELATIVE;
+			c.gridx=2;
+			c.gridy=2;
+			c.ipadx=0;
+			c.ipady=0;
+			c.insets=new Insets(0,0,0,0);
+			panelone.add(twentyfive,c);
+			
+			twentyfive.addActionListener(new
+					ActionListener()
+			{
+				public void actionPerformed(ActionEvent e){
+					CompleteSodaMachine.sm.entry("25");
+					if(!timer0.isRunning())
+					{
+						timer0.start();
+					}
+				}
+			});
+		
+			
+			JLabel Total = new JLabel("Total");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=3;
+			c.insets=new Insets(25,0,25,0);
+			panelone.add(Total,c);
+			
+		    totalbox = new JTextField("0");
+			c.gridwidth=1;
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=1;
+			c.gridy=3;
+			c.ipady=0;
+			c.insets=new Insets(25,0,25,5);
+			panelone.add(totalbox,c);
+			
+			
+		    coinreturn = new JButton("Coin Return");
+			c.anchor=GridBagConstraints.CENTER;
+			c.gridwidth=3;
+			c.gridx=2;
+			c.gridy=3;
+			c.ipadx=0;
+			c.ipady=0;
+			c.insets=new Insets(25,0,25,0);
+			panelone.add(coinreturn,c);
+			
+			coinreturn.addActionListener(new
+					ActionListener()
+			{
+				public void actionPerformed(ActionEvent e){
+					CompleteSodaMachine.sm.entry("cr");
+				}
+			});
+			
+			panelone.setBorder(BorderFactory.createLineBorder(Color.black));
+			
+			//==============================================================================
+			//JPanel2 SODA SELECTION
+		
+			JPanel paneltwo = new JPanel();
+			paneltwo.setLayout(new GridBagLayout());
+			
+				
+			JLabel sodaselection = new JLabel("Soda Selection");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=1;
+			c.gridy=0;
+			c.insets= new Insets(0,0,0,95);
+			paneltwo.add(sodaselection,c);
+			
+			// BUTTONS SODA
+			
+		    coke = new JButton("Coke");
+			c.gridwidth=1;
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=0;
+			c.gridy=5;
+			c.ipady=0;
+			c.insets=new Insets(5,0,0,0);
+			paneltwo.add(coke,c);
+			
+			coke.addActionListener(new
+					ActionListener()
+			{
+				public void actionPerformed(ActionEvent e){
+					CompleteSodaMachine.sm.entry("s0");
+					CompleteSodaMachine.timer1.start();
+					//CompleteSodaMachine.timer1.setRepeats(false);
+					timer0.stop();
+				}
+			});
+			//TIMERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+			timer1 = new Timer(3500,new ActionListener()
+			{
+				public void actionPerformed(ActionEvent event){
+					selection1.setText("");
+					change1.setText("");
+					coke1.setText("");
+					orange1.setText("");
+					grape1.setText("");
+					sprite1.setText("");
+
+					totalbox.setText("0");
+						
+				}
+			});
+		
+			
+		    coke1 = new JTextField();
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=1;
+			c.gridy=5;
+			c.ipady=0;
+			c.insets=new Insets(0,50,0,50);
+			paneltwo.add(coke1,c);
+			
+		
+			orange = new JButton("Orange");
+			c.gridwidth=1;
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=0;
+			c.gridy=6;
+			c.ipady=0;
+			c.insets=new Insets(5,0,0,0);
+			paneltwo.add(orange,c);
+			
+			orange.addActionListener(new
+					ActionListener()
+			{
+				public void actionPerformed(ActionEvent e){
+					CompleteSodaMachine.sm.entry("s1");
+					timer1.start();
+					CompleteSodaMachine.timer1.setRepeats(false);
+					timer0.stop();
+
+				}
+			});
+			//TIMERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+			
+			
+		    orange1 = new JTextField();
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=1;
+			c.gridy=6;
+			c.ipady=0;
+			c.insets=new Insets(0,50,0,50);
+			paneltwo.add(orange1,c);
+			
+			
+			sprite = new JButton("Sprite");
+			c.gridwidth=1;
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=0;
+			c.gridy=7;
+			c.ipady=0;
+			c.insets=new Insets(5,0,0,0);
+			paneltwo.add(sprite,c);
+			
+			
+			
+			sprite.addActionListener(new
+					ActionListener()
+			{
+				public void actionPerformed(ActionEvent e){
+					CompleteSodaMachine.sm.entry("s2");
+					timer1.start();
+					CompleteSodaMachine.timer1.setRepeats(false);
+					timer0.stop();
+
+				}
+			});
+			
+		
+			
+		    sprite1 = new JTextField();
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=1;
+			c.gridy=7;
+			c.ipady=0;
+			c.insets=new Insets(0,50,0,50);
+			paneltwo.add(sprite1,c);
+			
+			
+			grape = new JButton("Grape");
+			c.gridwidth=1;
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=0;
+			c.gridy=8;
+			c.ipady=0;
+			c.insets=new Insets(5,0,0,0);
+			paneltwo.add(grape,c);
+			
+			
+			
+			grape.addActionListener(new
+					ActionListener()
+			{
+				public void actionPerformed(ActionEvent e){
+					CompleteSodaMachine.sm.entry("s3");
+					timer1.start();
+					CompleteSodaMachine.timer1.setRepeats(false);
+					timer0.stop();
+
+				}
+			});
+			
+		
+		    grape1 = new JTextField();
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=1;
+			c.gridy=8;
+			c.ipady=0;
+			c.insets=new Insets(0,50,0,50);
+			paneltwo.add(grape1,c);
+			
+			paneltwo.setBorder(BorderFactory.createLineBorder(Color.black));
+
+			
+			//==========================================================================
+			// Panel 3 Soda Delivery
+			JPanel panelthree = new JPanel();
+			panelthree.setLayout(new GridBagLayout());
+			
+			JLabel sodadelivery = new JLabel("Soda Delivery");
+			c.anchor= GridBagConstraints.LINE_END;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=0;
+			c.gridx=1;
+			c.gridy=0;
+			c.insets=new Insets(0,50,0,0);
+			panelthree.add(sodadelivery,c);
+			
+			JLabel selection = new JLabel("Selection");
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=0;
+			c.gridx=0;
+			c.gridy=1;
+			c.ipady=20;
+			c.insets=new Insets(0,0,0,160);
+			panelthree.add(selection,c);
+			
+		    selection1 = new JTextField();
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=1;
+			c.gridy=1;
+			c.ipady=1;
+			c.insets=new Insets(0,75,0,85);
+			panelthree.add(selection1,c);
+			
+			JLabel change = new JLabel("Change");
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=0;
+			c.gridx=0;
+			c.gridy=2;
+			c.ipady=20;
+			c.insets=new Insets(0,0,0,160);
+			panelthree.add(change,c);
+			
+		    change1 = new JTextField();
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=1;
+			c.gridy=2;
+			c.ipady=1;
+			c.insets=new Insets(0,75,0,85);
+			panelthree.add(change1,c);
+
+			//==================================================================================
+			//Panel Four
+			
+			JPanel panelfour = new JPanel();
+			panelfour.setLayout(new GridBagLayout());		
+			
+			JLabel adminmode = new JLabel("Admin Mode");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=11;
+			c.insets=new Insets(15,0,0,0);
+			panelfour.add(adminmode,c);
+			
+			JButton enter = new JButton("Enter");
+			c.gridwidth=1;
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=1;
+			c.gridy=12;
+			c.ipady=0;
+			c.insets=new Insets(20,0,20,0);
+			
+			
+			
+			
+			panelfour.add(enter,c);
+			
+			//=====================================================================================================================
+			//ENTIRE SODA MACHINE FRAME!!!
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			
+			frame.setLayout(new GridBagLayout());
+			
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=0;
+			c.insets= new Insets(0,0,0,0);	
+			frame.add(panelone,c);
+			
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=1;
+			c.insets= new Insets(0,0,0,0);		
+			frame.add(paneltwo,c);
+			
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=2;
+			c.insets= new Insets(0,0,0,0);		
+			
+			frame.add(panelthree,c);
+			
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=3;
+			c.insets= new Insets(0,0,0,0);		
+			
+			frame.add(panelfour,c);
+			
+			
+			/*
+			frame.setLayout(new BorderLayout());
+			
+		
+			frame.add(panelone,BorderLayout.NORTH);
+			frame.add(paneltwo,BorderLayout.CENTER);
+			frame.add(panelthree,BorderLayout.SOUTH);
+			 */
+			frame.pack();
+			frame.setVisible(true);
+
+			enter.addActionListener(new
+					ActionListener()
+			{
+				public void actionPerformed(ActionEvent e){
+					CompleteSodaMachine.adminframe.setVisible(true);
+					CompleteSodaMachine.sm.admin1.entry("a");
+				}
+			});
+
+
+		}
+
+		public static void admin(){
+			//PANEL ONE
+			JPanel panelone = new JPanel();
+			panelone.setLayout(new GridBagLayout());		
+			
+			GridBagConstraints c = new GridBagConstraints();
+
+			
+			JLabel adminmode = new JLabel("Admin Mode");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=1;
+			c.gridy=0;
+			c.insets=new Insets(0,0,0,0);
+			panelone.add(adminmode,c);
+			
+			JLabel coinreturn = new JLabel("Coin Return");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=1;
+			c.insets=new Insets(5,0,0,35);
+			panelone.add(coinreturn,c);
+			
+			JLabel n = new JLabel("Nickels - ");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=2;
+			c.insets=new Insets(5,0,0,35);
+			panelone.add(n,c);
+			
+			n1 = new JTextField();
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=1;
+			c.gridy=2;
+			c.ipady=0;
+			c.insets=new Insets(10,75,0,0);
+			panelone.add(n1,c);
+			
+			JLabel d = new JLabel("Dimes - ");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=3;
+			c.insets=new Insets(5,0,0,35);
+			panelone.add(d,c);
+			
+			d1 = new JTextField();
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=1;
+			c.gridy=3;
+			c.ipady=0;
+			c.insets=new Insets(10,75,0,0);
+			panelone.add(d1,c);
+			
+			JLabel q = new JLabel("Quarters - ");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=4;
+			c.insets=new Insets(5,0,0,35);
+			panelone.add(q,c);
+			
+			q1 = new JTextField();
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=1;
+			c.gridy=4;
+			c.ipady=0;
+			c.insets=new Insets(10,75,0,0);
+			panelone.add(q1,c);
+			
+			
+			//==========================================================================================
+			//PANEL 2 of AdminFrame
+			JPanel paneltwo = new JPanel();
+			paneltwo.setLayout(new GridBagLayout());
+			
+			JLabel cashbox = new JLabel("Cash Box");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=0;
+			c.insets=new Insets(15,0,0,50);
+			paneltwo.add(cashbox,c);
+			
+			JLabel total = new JLabel("Total");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=1;
+			c.insets=new Insets(15,0,0,50);
+			paneltwo.add(total,c);
+			
+			total1 = new JTextField();
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=1;
+			c.gridy=1;
+			c.ipady=0;
+			c.insets=new Insets(10,35,0,100);
+			paneltwo.add(total1,c);
+			
+		    remove = new JButton("Remove");
+			c.gridwidth=1;
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=2;
+			c.gridy=1;
+			c.ipady=0;
+			c.insets=new Insets(5,125,0,0);
+			paneltwo.add(remove,c);
+			
+			remove.addActionListener(new
+					ActionListener()
+			{
+				public void actionPerformed(ActionEvent e){
+					InitialState.admin1.entry("r");
+				}
+			});
+
+			//==========================================================================================
+			//PANEL 3 of AdminFrame
+			
+			Border blackline = BorderFactory.createLineBorder(Color.black);
+			
+			JPanel panelthree = new JPanel();
+			panelthree.setLayout(new GridBagLayout());
+			
+			JLabel inventory = new JLabel("Inventory");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=0;
+			c.insets=new Insets(15,0,0,150);
+			panelthree.add(inventory,c);
+			
+			//NAME AND SODA TYPES
+			JLabel name = new JLabel("Name");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=1;
+			c.ipady=10;
+			c.insets=new Insets(15,0,0,150);
+			name.setBorder(blackline);
+			panelthree.add(name,c);
+
+			JLabel coke = new JLabel("Coke");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=2;
+			c.insets=new Insets(0,0,0,150);
+			coke.setBorder(blackline);
+			panelthree.add(coke,c);
+			
+			JLabel orange = new JLabel("Orange");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=3;
+			c.insets=new Insets(0,0,0,150);
+			orange.setBorder(blackline);
+			panelthree.add(orange,c);
+			
+			JLabel sprite = new JLabel("Sprite");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=4;
+			c.insets=new Insets(0,0,0,150);
+			sprite.setBorder(blackline);
+
+			panelthree.add(sprite,c);
+			
+			JLabel grape = new JLabel("Grape");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=5;
+			c.insets=new Insets(0,0,0,150);
+			grape.setBorder(blackline);
+			panelthree.add(grape,c);
+			
+			//Quantity in Stock Column
+			JLabel qis = new JLabel("Quanity");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=2;
+			c.gridy=1;
+			c.insets=new Insets(15,52,0,85);
+			qis.setBorder(blackline);
+			panelthree.add(qis,c);
+			
+			JLabel restock = new JLabel("Restock");
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=3;
+			c.gridy=1;
+			c.insets=new Insets(15,117,0,0);
+			restock.setBorder(blackline);
+			panelthree.add(restock,c);
+			
+			qcoke = new JTextField();
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=1;
+			c.gridy=2;
+			c.ipady=10;
+			c.insets=new Insets(0,52,0,85);
+			panelthree.add(qcoke,c);
+			
+			qorange = new JTextField();
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=1;
+			c.gridy=3;
+			c.ipady=10;
+			c.insets=new Insets(0,52,0,85);
+			panelthree.add(qorange,c);
+			
+			qsprite = new JTextField();
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=1;
+			c.gridy=4;
+			c.ipady=10;
+			c.insets=new Insets(0,52,0,85);
+			panelthree.add(qsprite,c);
+			
+			qgrape = new JTextField();
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=1;
+			c.gridy=5;
+			c.ipady=10;
+			c.insets=new Insets(0,52,0,85);
+			panelthree.add(qgrape,c);
+			
+			removecoke = new JButton("Yes");
+			c.gridwidth=0;
+			c.gridx=2;
+			c.gridy=2;
+			c.ipady=1;
+			c.insets=new Insets(0,118,0,0);
+			panelthree.add(removecoke,c);
+			
+			removecoke.addActionListener(new
+					ActionListener()
+			{
+				public void actionPerformed(ActionEvent e){
+					InitialState.admin1.entry("s0");
+				}
+			});
+			
+			removeorange = new JButton("Yes");
+			c.gridwidth=0;
+			c.gridx=2;
+			c.gridy=3;
+			c.insets=new Insets(0,118,0,0);
+			panelthree.add(removeorange,c);
+			
+			removeorange.addActionListener(new
+					ActionListener()
+			{
+				public void actionPerformed(ActionEvent e){
+					InitialState.admin1.entry("s1");
+				}
+			});
+			
+			removesprite = new JButton("Yes");
+			c.gridwidth=0;
+			c.gridx=2;
+			c.gridy=4;
+			c.insets=new Insets(0,118,0,0);
+			panelthree.add(removesprite,c);
+			
+			removesprite.addActionListener(new
+					ActionListener()
+			{
+				public void actionPerformed(ActionEvent e){
+					InitialState.admin1.entry("s2");
+				}
+			});
+			
+			removegrape = new JButton("Yes");
+			c.gridwidth=0;
+			c.gridx=2;
+			c.gridy=5;
+			c.insets=new Insets(0,118,0,0);
+			panelthree.add(removegrape,c);
+			
+			removegrape.addActionListener(new
+					ActionListener()
+			{
+				public void actionPerformed(ActionEvent e){
+					InitialState.admin1.entry("s3");
+				}
+			});
+			
+			//PANEL FOUR FOR ADMIN FRAME
+			
+			JPanel panelfour = new JPanel();
+			panelfour.setLayout(new GridBagLayout());
+			
+			JButton quit = new JButton("Quit");
+			c.gridwidth=1;
+			c.fill= GridBagConstraints.HORIZONTAL;
+			c.gridx=0;
+			c.gridy=0;
+			c.ipady=0;
+			c.insets=new Insets(25,0,25,0);
+			panelfour.add(quit,c);
+			
+			//FRAMEWORK FOR ADMINFRAME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			adminframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			adminframe.setLayout(new GridBagLayout());
+			
+			//adding panelone to adminframe
+			
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=0;
+			c.insets= new Insets(0,0,0,0);	
+			adminframe.add(panelone,c);
+			
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=1;
+			c.insets= new Insets(0,0,0,0);		
+			adminframe.add(paneltwo,c);
+			
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=2;
+			c.insets= new Insets(0,0,0,0);		
+			adminframe.add(panelthree,c);
+			
+			c.anchor= GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth=GridBagConstraints.REMAINDER;
+			c.gridx=0;
+			c.gridy=3;
+			c.insets= new Insets(0,0,0,0);		
+			adminframe.add(panelfour,c);
+			
+			adminframe.pack();
+			adminframe.setVisible(false);
+			
+			quit.addActionListener(new
+					ActionListener()
+			{
+				public void actionPerformed(ActionEvent e){
+					
+					CompleteSodaMachine.adminframe.setVisible(false);
+				}
+			});
+			
+		}
+		
+	
+
+}
+
+
